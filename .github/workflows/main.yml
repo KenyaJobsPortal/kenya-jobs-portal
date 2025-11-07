@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kenya Jobs Portal</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+  }
+  h1 {
+    color: #333;
+  }
+  p.description {
+    font-size: 16px;
+    color: #555;
+    max-width: 600px;
+    margin: 0 auto 20px auto;
+  }
+  .job {
+    background-color: #fff;
+    margin: 10px auto;
+    padding: 15px;
+    border-radius: 8px;
+    max-width: 600px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  .job button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .job button:hover {
+    background-color: #0056b3;
+  }
+  .thank-you {
+    color: green;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  .job-details {
+    text-align: left;
+  }
+  .payment-number {
+    color: blue;
+    font-weight: bold;
+  }
+</style>
+</head>
+<body>
+
+<h1>Kenya Jobs Portal</h1>
+<p class="description">
+  Welcome! Browse through hundreds of jobs in Kenya. Click "Apply" to pay 350 Ksh and talk to the job owner.
+</p>
+
+<div id="jobsContainer"></div>
+
+<script>
+// Job titles
+const jobTitles = [
+  "Software Developer","Nurse","Teacher","Driver","Accountant","Sales Executive","HR Manager",
+  "Marketing Manager","Electrician","Plumber","Business Analyst","Chef","Customer Service Rep",
+  "Pharmacist","Mechanic","Web Developer","Mobile App Developer","Data Analyst","Receptionist",
+  "Security Guard","Construction Supervisor","Hotel Manager","Housekeeper","Tour Guide","Social Worker",
+  "Radiographer","Clinical Officer","Dentist","Laboratory Technician","Agronomist","Bank Teller",
+  "Financial Analyst","Project Manager","Civil Engineer","Mechanical Engineer","Network Administrator",
+  "UX/UI Designer","Graphic Designer","Content Writer","Journalist","Animator","Sound Engineer"
+];
+
+// Locations
+const locations = ["Nairobi", "Mombasa", "Kisumu", "Eldoret", "Nakuru", "Thika", "Kitale", "Malindi"];
+
+const jobs = [];
+for(let i=0; i<200; i++){
+  let salary = Math.floor(Math.random() * (60000 - 5000 + 1)) + 5000;
+  let location = locations[Math.floor(Math.random() * locations.length)];
+  let title = jobTitles[i % jobTitles.length]; // loop through titles
+  jobs.push({
+    title: title,
+    location: location,
+    details: `We are hiring a ${title} in ${location}. Requirements: Experience in the field, good communication skills.`,
+    salary: salary.toLocaleString() + " Ksh"
+  });
+}
+
+const paymentNumber = "0110828315";
+const jobsContainer = document.getElementById('jobsContainer');
+
+jobs.forEach((job, index) => {
+  const jobDiv = document.createElement('div');
+  jobDiv.className = 'job';
+  jobDiv.innerHTML = `
+    <div class="job-details">
+      <h3>${job.title}</h3>
+      <p><strong>Location:</strong> ${job.location}</p>
+      <p><strong>Salary:</strong> ${job.salary}</p>
+      <p>${job.details}</p>
+      <button onclick="applyJob(${index})">Apply (350 Ksh)</button>
+      <div class="thank-you" id="thankYou${index}" style="display:none;">
+        Pay 350 Ksh to: <span class="payment-number">${paymentNumber}</span> to talk to the owner
+      </div>
+    </div>
+  `;
+  jobsContainer.appendChild(jobDiv);
+});
+
+function applyJob(index){
+  document.getElementById(`thankYou${index}`).style.display = 'block';
+}
+</script>
+
+</body>
+</html>
